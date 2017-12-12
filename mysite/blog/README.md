@@ -1,3 +1,7 @@
+## 邮件
+QQ邮箱不管25端口，还是465/587开启SSL都没效，后面改用网易163的有效，参考链接[django发送邮件](http://www.jianshu.com/p/6ab798cd4864)
+
+## solr
 1. 执行`python manage.py build_solr_schema`出现`TypeError context must be a dict rather than Context`错误，
 这里可以参看stackoverflow [TypeError: context must be a dict rather than Context](https://stackoverflow.com/questions/45739518/typeerror-context-must-be-a-dict-rather-than-context)。
 在`site-packages/haystack/management/commands/build_solr_schema.py`文件的第45行，将return语句改成普通的字典就可以了。
