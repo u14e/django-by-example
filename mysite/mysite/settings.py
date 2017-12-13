@@ -24,11 +24,12 @@ SECRET_KEY = 'zej%(qf#$e9vk!j3ml#n^b3k#txnx-n3ph_vqf$(m&n2%%8amg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'haystack',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -118,8 +120,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 用户dev模式文件存放
+# 用户上传的文件
+MEDIA_URL = '/media/'
+# 项目依赖的本地文件路径
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 # 邮件
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # 不需要的
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_USER = '15521195447@163.com'  # 邮件地址
 EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')  # 授权码
@@ -137,3 +145,25 @@ HAYSTACK_CONNECTIONS = {
         'URL': 'http://127.0.0.1:8983/solr/blog'
     }
 }
+
+# 登陆登出重定向URL设置
+from django.core.urlresolvers import reverse_lazy
+
+LOGIN_REDIRECT_URL = reverse_lazy(
+    'dashboard')  # 告诉Django用户登录成功后如果contrib.auth.views.login视图（view）没有获取到next参数\将会默认重定向到哪个URL
+LOGIN_URL = reverse_lazy('login')  # 重定向用户登录的URL
+LOGOUT_URL = reverse_lazy('logout')  # 重定向用户登出的URL
+
+# 自定义认证后台可以通过用户名和email登陆
+# 可以通过第三方社交账号认证登陆
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend'
+)
+
+# 配置Google认证
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
