@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'haystack',
-    'social_django'
+    'social_django',
+    'images',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
@@ -167,3 +169,8 @@ AUTHENTICATION_BACKENDS = (
 # 配置Google认证
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+# 为User模型添加绝对路径get_absolute_url
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail', args=(u.username,))
+}

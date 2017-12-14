@@ -1,0 +1,1 @@
+## 使用[uuslug](https://github.com/un33k/django-uuslug)`来替代django自带的slugify`

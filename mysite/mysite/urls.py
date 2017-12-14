@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('blog.urls')),
     url(r'^account/', include('account.urls')),
+    url(r'^images/', include('images.urls')),
 
     # 网站地图
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},

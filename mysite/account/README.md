@@ -49,3 +49,4 @@ AUTHENTICATION_BACKENDS = (
 6. `ALLOWED_HOSTS`添加'ALLOWED_HOSTS = ['localhost', '127.0.0.1']'，经过测试这两个现在都可以了，所以不需要改host，记得在谷歌凭证那里的url添加对应的域名，
 我这里也把两个都添加了，`http://127.0.0.1:8000/social-auth/complete/google-oauth2/`和`http://localhost:8000/social-auth/complete/google-oauth2/`
 7. 链接`{% url "social:begin" "google-oauth2" %}`
+8. Google认证时记得开全局VPN，否则`由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败`，see: https://www.v2ex.com/t/302552
