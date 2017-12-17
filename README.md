@@ -1,1 +1,3 @@
-- [Blog的踩坑说明](./mysite/blog/README.md)
+- [blog的踩坑记录](./mysite/blog/README.md)
+- [account的踩坑记录](./mysite/account/README.md)
+- [images的踩坑记录](./mysite/images/README.md)

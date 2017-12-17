@@ -4,3 +4,5 @@ venv/
 __pycache__/
 media/
 mysite/mysite/__pycache__/settings.cpython-35.pyc
+yarn.lock
+node_modules/

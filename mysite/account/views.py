@@ -9,7 +9,8 @@ from common.decorators import ajax_required
 from django.contrib.auth.models import User
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile, Contact
-
+from actions.utils import create_action
+from actions.models import Action
 
 
 def user_login(req):
@@ -47,6 +48,7 @@ def register(req):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             profile = Profile.objects.create(user=new_user)
+            create_action(new_user, 'has created an account')  # 添加进活动流
             return render(req, 'account/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
@@ -55,7 +57,19 @@ def register(req):
 
 @login_required
 def dashboard(req):
-    return render(req, 'account/dashboard.html', {'section': 'dashboard'})
+    actions = Action.objects.exclude(user=req.user)
+    following_ids = req.user.following.values_list('id', flat=True)
+    if following_ids:
+        # select_related支持OneToOne,ForeignKey(one to many)
+        # prefetch_related支持ManyToMany，反向ForeignKey(many to one)
+        actions = actions.filter(user_id__in=following_ids) \
+            .select_related('user', 'user__profile') \
+            .prefetch_related('target')
+
+    actions = actions[:10]
+
+    return render(req, 'account/dashboard.html', {'section': 'dashboard',
+                                                  'actions': actions})
 
 
 @login_required
@@ -104,8 +118,10 @@ def user_follow(req):
             user = User.objects.get(id=user_id)
             if action == 'follow':
                 Contact.objects.get_or_create(user_from=req.user, user_to=user)
+                create_action(req.user, 'is following', user)  # 添加进活动流
             else:
                 Contact.objects.filter(user_from=req.user, user_to=user).delete()
+                create_action(req.user, 'unfollow', user)  # 添加进活动流
             return JsonResponse({'status': 'ok'})
         except User.DoesNotExist:
             return JsonResponse({'status': 'ko'})
