@@ -24,7 +24,7 @@ SECRET_KEY = 'p+ok3#k4v77an#qd+kp6eiznn2-8el$2ij!!)$i(1b9nv1@%zt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['5c226027.ngrok.io', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'paypal.standard.ipn',
+    'payment.apps.PaymentConfig',
+    'coupons.apps.CouponsConfig',
 ]
 
 MIDDLEWARE = [
@@ -117,6 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # 本地开发模式下的上传文件路径配置
 MEDIA_URL = '/media/'
@@ -137,3 +141,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # celery配置
 BROKER_URL = 'redis://127.0.0.1:6379/0'
 BROKER_TRANSPORT = 'redis'
+
+
+# paypal支付
+PAYPAL_RECEIVER_EMAIL = '467030463@qq.com'
+PAYPAL_TEST = True

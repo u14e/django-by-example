@@ -22,6 +22,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^cart/', include('cart.urls')),
     url(r'^orders/', include('orders.urls')),
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
+    url(r'^payment/', include('payment.urls')),
+    url(r'^coupons/', include('coupons.urls')),
     url(r'^', include('shop.urls')),
 ]
 
