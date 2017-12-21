@@ -11,7 +11,7 @@ from .fields import OrderField
 
 class Subject(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.CharField(max_length=200, unique=True)
+    slug = models.CharField(max_length=200, unique=True, blank=True)
 
     class Meta:
         ordering = ('title',)
@@ -29,7 +29,7 @@ class Course(models.Model):
     subject = models.ForeignKey(Subject, related_name='courses')
 
     title = models.CharField(max_length=200)
-    slug = models.CharField(max_length=200, unique=True)
+    slug = models.CharField(max_length=200, unique=True, blank=True)
     overview = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
 

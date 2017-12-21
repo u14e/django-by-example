@@ -27,3 +27,32 @@ using different meta options. No database table is created for proxy models.
 
 ## Todo
 - cache缓存，memcached的windows安装包下载网址访问不了
+
+## build serializers
+- **Serializer** : Provides serialization for normal Python class instances
+- **ModelSerializer** : Provides serialization for model instances
+- **HyperlinkedModelSerializer** : The same as  ModelSerializer , but
+represents object relationships with links rather than primary keys
+
+## REST Framework authentication backends
+- **BasicAuthentication** : HTTP Basic Authentication. The user and password
+are sent by the client in the  Authorization HTTP header encoded with
+Base64. You can learn more about it at  https://en.wikipedia.org/wiki/
+Basic_access_authentication .
+- **TokenAuthentication** : Token-based authentication. A  Token model is used
+to store user tokens. Users include the token in the  Authorization HTTP
+header for authentication.
+- **SessionAuthentication** : Uses Django's session backend for authentication.
+This backend is useful to perform authenticated AJAX requests to the API
+from your website's frontend.
+
+## REST Framework  permission system
+- **AllowAny** : Unrestricted access, regardless of if a user is authenticated or not.
+- **IsAuthenticated** : Allows access to authenticated users only.
+- **IsAuthenticatedOrReadOnly** : Complete access to authenticated users.
+Anonymous users are only allowed to execute read methods such as GET,
+HEAD, or OPTIONS.
+- **DjangoModelPermissions** : Permissions tied to  django.contrib.auth . The
+view requires a  queryset attribute. Only authenticated users with model
+permissions assigned are granted permission.
+- **DjangoObjectPermissions** : Django permissions on a per-object basis.
