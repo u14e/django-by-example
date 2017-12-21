@@ -24,3 +24,6 @@ created for each model.
 - **Proxy models**: Useful when you need to change the behavior of a model, for
 example, including additional methods, changing the default manager, or
 using different meta options. No database table is created for proxy models.
+
+## Todo
+- cache缓存，memcached的windows安装包下载网址访问不了

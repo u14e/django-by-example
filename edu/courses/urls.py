@@ -26,4 +26,8 @@ urlpatterns = [
     # 客户端调整顺序
     url(r'^module/order/$', views.ModuleOrderView.as_view(), name='module_order'),
     url(r'^content/order/$', views.ContentOrderView.as_view(), name='content_order'),
+
+    # course的list和detail
+    url(r'^subject/(?P<subject>[\w-]+)/$', views.CourseListView.as_view(), name='course_list_subject'),
+    url(r'^(?P<slug>[\w-]+)/$', views.CourseDetailView.as_view(), name='course_detail'),
 ]

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'students.apps.StudentsConfig',
+    'embed_video',
 ]
 
 MIDDLEWARE = [
@@ -120,8 +123,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# 用户dev模式文件存放
-# 用户上传的文件
+# 用户上传的文件夹
 MEDIA_URL = '/media/'
 # 项目依赖的本地文件路径
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# 如果user登录后，没有url里面next参数，则默认跳转到
+LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
