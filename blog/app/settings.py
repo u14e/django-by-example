@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'taggit'
 ]
 
 MIDDLEWARE = [
@@ -119,3 +120,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 控制台本地查看邮件发送信息
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# google邮件服务
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = '用户名'
+# EMAIL_HOST_PASSWORD = '密码'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# 启用不够安全的应用（发送失败，所以仅供参考）
+# https://myaccount.google.com/lesssecureapps?pli=1

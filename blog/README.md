@@ -89,3 +89,30 @@ post.delete()
 创建manager的两种方法：
 - 添加额外的manager方法: `Post.objects.my_manager()`
 - 修改默认的manager: `Post.my_manager.all()`
+
+表单
+----
+
+```python
+# forms.py定义表单 EmailPostForm
+if request.method == 'POST':
+    form = EmailPostForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+    else:
+        form.errors
+else:
+    form = EmailPostForm()
+```
+
+发邮件
+----
+
+```bash
+# settings.py
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = '账户'
+EMAIL_HOST_PASSWORD = '密码'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+```
