@@ -110,9 +110,24 @@ else:
 
 ```bash
 # settings.py
+# 1. 控制台本地查看邮件发送信息
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# 2. gmail邮件服务
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = '账户'
 EMAIL_HOST_PASSWORD = '密码'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 ```
+
+模板标签(template tags)
+----
+
+- `simple_tag`: 返回字符串
+- `inclusion_tag`: 返回一个渲染后的模板
+
+模板过滤器(template filters)
+----
+
+类似于模板标签，也是用register注册，使用的时候是 `{{ variable|filter1|filter2 }}`
