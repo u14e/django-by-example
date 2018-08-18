@@ -125,4 +125,15 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login' # 重定向用户登录的URL
 LOGOUT_URL = 'logout'   # 重定向用户登出的URL
 
+# 控制台本地查看邮件发送信息
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# 图片上传
+MEDIA_URL = '/media/'   # 基本url
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')   # 本地路径(用于开发测试)
+
+# 自定义用户认证
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend'
+]

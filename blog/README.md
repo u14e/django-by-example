@@ -26,6 +26,7 @@ python manage.py makemigrations blog
 # 5. 运行迁徙脚本
 python manage.py migrate
 # 6. 注册后台
+# 可选(编写forms)
 # 7. 编写views
 # 8. 注册urls
 # 9. 编写template渲染函数
