@@ -17,7 +17,7 @@
                     <a href="{% url 'dashboard' %}">Dashboard</a>
                 </li>
                 <li {% if section == 'images' %} class="selected"{% endif %}>
-                    <a href="#">Images</a>
+                    <a href="{% url 'images:list' %}">Images</a>
                 </li>
                 <li {% if section == 'people' %} class="selected"{% endif %}>
                     <a href="#">People</a>
@@ -45,6 +45,26 @@
     <div id="content">
         {% block content %} {% endblock %}
     </div>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+    var csrftoken = $.cookie('csrftoken');
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            }
+        }
+    });
+    $(document).ready(function () {
+        {% block domready %}
+        {% endblock %}
+    });
+</script>
 </body>
 
 </html>

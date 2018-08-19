@@ -123,3 +123,31 @@ AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend'   # 自定义的
 ]
 ```
+
+数据库索引
+----
+
+> 如果对`ForeignKey`或`unique=True`的字段，频繁使用`filter()`、`exclude()`、`order_by()`这些查询，可以加索引，提升查询性能
+
+```python
+class Image(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, blank=True)
+    created = models.DateField(auto_now_add=True,
+                               db_index=True)
+
+    # 重写save方法
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Image, self).save(*args, **kwargs)
+```
+
+Ngrok
+----
+https://ngrok.com/download 使得本地服务可以被在线访问
+
+- windows平台下(ngrok下载文件目录下)执行: `ngrok.exe http 8000`
+- `settings.py`修改`ALLOWED_HOSTS`: `ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'd21a4ec6.ngrok.io']`
+- 访问`localhost:4000`通过Web UI查看请求信息
+- 访问`http://d21a4ec6.ngrok.io/account/`
