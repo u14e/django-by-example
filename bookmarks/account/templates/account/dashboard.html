@@ -20,4 +20,9 @@
         or
         <a href="{% url 'password_change' %}">change your password</a>
     </p>
+
+    <h2>What's happening</h2>
+    {% for action in actions %}
+        {% include 'actions/action/detail.html' %}
+    {% endfor %}
 {% endblock %}

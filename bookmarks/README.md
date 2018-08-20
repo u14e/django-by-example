@@ -44,6 +44,14 @@ Django用户认证
         user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                     on_delete=models.CASCADE)   # 用户user删除时，此profile也相应删除
     ```
+- `auth.User`
+    ```python
+    class Action(models.Model):
+        user = models.ForeignKey('auth.User',
+                                related_name='actions',
+                                db_index=True,
+                                on_delete=models.CASCADE)
+    ```
 
 图片上传
 ----
@@ -145,9 +153,48 @@ class Image(models.Model):
 
 Ngrok
 ----
+
 https://ngrok.com/download 使得本地服务可以被在线访问
 
 - windows平台下(ngrok下载文件目录下)执行: `ngrok.exe http 8000`
 - `settings.py`修改`ALLOWED_HOSTS`: `ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'd21a4ec6.ngrok.io']`
 - 访问`localhost:4000`通过Web UI查看请求信息
 - 访问`http://d21a4ec6.ngrok.io/account/`
+
+`contenttypes`框架
+----
+
+使用`ContentType`为`models`添加通用的关系，`ContentType`对象指向使用这个关系的`model`
+
+- 一个指向`ContentType`的`ForeignKey`字段: 表示使用这个关系的`model`
+- 一个存储这个相关对象的主键(`primary key`)的字段: 通常是`models.PositiveIntegerField`类型
+- 一个定义和管理使用上面两个字段的通用关系的字段：是`GenericForeignKey`类型的字段
+
+```python
+class Action(models.Model):
+    target_ct = models.ForeignKey(ContentType,
+                                  blank=True,
+                                  null=True,
+                                  related_name='target_obj',
+                                  on_delete=models.CASCADE)
+    target_id = models.PositiveIntegerField(null=True,
+                                            blank=True,
+                                            db_index=True)
+    target = GenericForeignKey('target_ct', 'target_id')
+```
+
+`select_related`和`prefetch_related`优化数据库查询时间
+----
+
+每次获取`Action`对象时，需要获取对应的`User`对象和此`user`相关的`Profile`对象
+
+`select_related`可以同时获取这些相关的对象
+
+`select_related`用于`ForeignKey`和`OneToOne`字段(`ForeignKey`表示`one-to-many`relationships)
+
+`prefetch_related`和`select_related`类似，用于`ManyToMany`和反向`ForeignKey`字段(`many-to-one`relationships)，也支持`GenericRelation`和`GenericForeignKey`
+
+```python
+actions = actions.select_related('user', 'user__profile')\
+                 .prefetch_related('target')[:10]
+```

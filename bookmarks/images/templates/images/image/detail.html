@@ -18,8 +18,7 @@
                     like{{ total_likes|pluralize }}
                 </span>
                 <span class="count">
-                    <span class="total">{{ total_views }}</span>
-                    view{{ total_views|pluralize }}
+                    {{ total_views }} view{{ total_views|pluralize }}
                 </span>
                 <a href="javascript:;"
                    data-id="{{ image.id }}"
