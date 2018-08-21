@@ -17,6 +17,9 @@ class Image(models.Model):
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         related_name='images_liked',
                                         blank=True)
+    # 总喜欢人数，用于获取最受欢迎的images的查询优化
+    total_likes = models.PositiveIntegerField(db_index=True,
+                                              default=0)
 
     def __str__(self):
         return self.title

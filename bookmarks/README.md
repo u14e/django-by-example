@@ -198,3 +198,21 @@ class Action(models.Model):
 actions = actions.select_related('user', 'user__profile')\
                  .prefetch_related('target')[:10]
 ```
+
+`signals`
+----
+
+- `pre_save`和`post_save`: model的`save()`执行前后
+- `pre_delete`和`post_delete`: model或者QuerySet的`delete()`调用前后
+- `m2m_changed`: `ManyToManyField`改变时
+
+`redis`
+----
+
+- 计数器: `incr`、`incrby`
+- 存储最新的列表: `lpush`、`rpush`和`lpop`、`rpop`
+- 队列
+- 缓存: `expire`、`expireat`
+- 发布订阅模式
+- 排名
+- 实时跟踪
