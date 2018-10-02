@@ -1,3 +1,3 @@
 - [x] [博客应用(blog)](blog/README.md)
 - [x] [社交网站(bookmarks)](bookmarks/README.md)
-- [ ] [在线商城(shop)]()
+- [ ] [在线商城(shop)](shop/README.md)
