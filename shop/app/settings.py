@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -130,4 +132,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # 购物车的session id
 CART_SESSION_ID = 'cart'
 
+# 控制台邮件
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# braintree支付配置
+BRAINTREE_MERCHANT_ID = 'gtj75byxmgcbfrvn'
+BRAINTREE_PUBLIC_KEY = 'djs4pvnhkqz7r6c7'
+BRAINTREE_PRIVATE_KEY = '016ead39685ae297a112cd976288f41f'
+
+from braintree import Configuration, Environment
+
+Configuration.configure(
+    Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)

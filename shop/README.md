@@ -102,6 +102,7 @@ TEMPLATES = [
 2. 创建Order实例，并为购物车里面的每项商品创建相关的OrderItem实例
 3. 清空购物车
 4. 发送下单成功邮件
+5. 跳到支付页面，支付成功将order状态换成paid，并填入交易号
 
 Celery
 ----
@@ -172,3 +173,12 @@ def order_create(request):
 1. 启动celery worker: `celery -A app worker -l info`
 2. 启动项目：`python manage.py runserver`
 3. 安装并启动flower监控工具: `pipenv shell flower` and `celery -A app flower` and 访问 `http://localhost:5555/`
+
+支付
+----
+
+1. 创建sandbox账户：  https://www.braintreepayments.com/sandbox
+2. 登录 https://sandbox.braintreegateway.com/login ：wh@字母+数字，获取 `Merchant ID`、`Public Key`、`Private Key`
+3. 安装：`pipenv install braintree`
+4. VISA 测试卡号: `4111 1111 1111 1111`, CVV: `123`, expiration date: `12/24`
+
