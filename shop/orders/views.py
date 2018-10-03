@@ -17,7 +17,11 @@ def order_create(request):
         form = OrderCreateForm(request.POST)
         if form.is_valid():
             # 1. 创建订单
-            order = form.save()
+            order = form.save(commit=False)
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.coupon.discount
+            order.save()
             # 2. 创建订单清单
             for item in cart:
                 OrderItem.objects.create(order=order,
@@ -30,6 +34,7 @@ def order_create(request):
             order_created.delay(order.id)
 
             request.session['order_id'] = order.id
+            del request.session['coupon_id']
             # 重定向到支付页面
             return redirect(reverse('payment:process'))
             # data = dict(

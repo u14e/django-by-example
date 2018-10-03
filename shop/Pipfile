@@ -10,6 +10,7 @@ celery = {version = "*", extras = ["redis"]}
 flower = "*"
 braintree = "*"
 weasyprint = "*"
+redis = "*"
 
 [dev-packages]
 

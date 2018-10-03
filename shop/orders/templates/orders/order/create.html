@@ -20,8 +20,13 @@
                 </li>
             {% endif %}
         </ul>
-{#        <p>Total: ${{ cart.get_total_price_after_discount|floatformat:"2" }}</p>#}
-        <p>Total: ${{ cart.get_total_price }}</p>
+        {% if cart.coupon %}
+            <li>
+                "{{ cart.coupon.code }}" coupon ({{ cart.coupon.discount }}% off)
+                <span>- ${{ cart.get_discount|floatformat:"2" }}</span>
+            </li>
+        {% endif %}
+        <p>Total: ${{ cart.get_total_price_after_discount|floatformat:"2" }}</p>
     </div>
 
     <form action="." method="post" class="order-form">
