@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'embed_video',
+
+    'students.apps.StudentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,10 +127,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-# 用户登录成功后，如果request.POST没有next参数，则默认重定向到此URL
-LOGIN_REDIRECT_URL = 'manage_course_list'
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-LOGIN_URL = 'login' # 重定向用户登录的URL
-LOGOUT_URL = 'logout'   # 重定向用户登出的URL
+STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# 用户登录成功后，如果request.POST没有next参数，则默认重定向到此URL
+LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
+LOGIN_URL = reverse_lazy('login')       # 重定向用户登录的URL
+LOGOUT_URL = reverse_lazy('logout')     # 重定向用户登出的URL
